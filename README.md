@@ -109,6 +109,11 @@ A Burp Suite extension for automated reflection detection and XSS triage.
 
 ---
 
+### Usage Image
+<img width="1903" height="730" alt="image" src="https://github.com/user-attachments/assets/644a47d9-6484-4619-8694-14bb348f5668" />
+
+---
+
 ## 🔧 Future Improvements
 
 - Custom payload support
@@ -120,4 +125,4 @@ A Burp Suite extension for automated reflection detection and XSS triage.
 
 ## 👨‍💻 Author
 
-Jolicious
+**Jolicious**
