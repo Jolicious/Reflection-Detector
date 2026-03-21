@@ -67,7 +67,7 @@ A Burp Suite extension for automated reflection detection and XSS triage.
 
 ### 4. Verify Installation
 
-- A new tab named **"Debug Reflection Detector"** should appear
+- A new tab named **"Reflection Detector"** should appear
 - Start intercepting traffic via **Proxy** or send requests via **Repeater**
 
 ---
