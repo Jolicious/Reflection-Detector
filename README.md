@@ -4,6 +4,13 @@ A Burp Suite extension for automated reflection detection and XSS triage.
 
 ---
 
+### Payload Used 
+- ```"><meow>```
+
+So if you see this, know that this is from the extension!!
+
+---
+
 ## 🚀 Features
 
 - 🔍 Detects reflection across:
