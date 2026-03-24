@@ -4,6 +4,16 @@ A Burp Suite extension for automated reflection detection and XSS triage.
 
 ---
 
+> [!WARNING]
+**This project is for educational purposes only. Use it only for Targets that you have Permissions to test.**
+
+---
+
+> [!IMPORTANT]
+> **This Filters potentials XSS targets/parameters, and is not 100% accurate.**
+
+---
+
 ### Payload Used 
 - ```"><meow>```
 
