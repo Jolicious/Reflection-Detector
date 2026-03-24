@@ -15,8 +15,8 @@ import re
 import json
 
 
-PAYLOAD_NORMAL = '"><{-+(.;:)\'}>'
-PAYLOAD_JSON = '"><{-+(.;:)\'}>'
+PAYLOAD_NORMAL = '"><{-+(.;:)\'/}>'
+PAYLOAD_JSON = '"><{-+(.;:)\'/}>'
 WORKER_COUNT = 3
 
 
@@ -177,7 +177,7 @@ class BurpExtender(IBurpExtender, ITab, IHttpListener, IMessageEditorController)
         self._panel.add(outer_split, BorderLayout.CENTER)
 
     def getTabCaption(self):
-        return "Debug Reflection Detector"
+        return "Reflection Detector"
 
     def getUiComponent(self):
         return self._panel
