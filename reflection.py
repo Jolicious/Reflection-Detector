@@ -2,20 +2,21 @@
 from burp import IBurpExtender, ITab, IHttpListener, IMessageEditorController
 from java.lang import Thread, Runnable
 from java.util.concurrent import LinkedBlockingQueue
-from java.awt.event import ActionListener, KeyAdapter
+from java.awt.event import ActionListener, KeyAdapter, MouseAdapter
 from javax.swing import (
     JPanel, JScrollPane, JTextArea, JButton, JLabel, JCheckBox,
-    JTable, JSplitPane, SwingUtilities, JComboBox, JTextField
+    JTable, JSplitPane, SwingUtilities, JComboBox, JTextField,
+    ListSelectionModel
 )
 from javax.swing.table import DefaultTableModel
 from javax.swing.event import ListSelectionListener
-from java.awt import BorderLayout, FlowLayout
+from java.awt import BorderLayout, FlowLayout, Dimension
 import re
 import json
 
 
-PAYLOAD_NORMAL = '"><meow>'
-PAYLOAD_JSON = '"><meow>'
+PAYLOAD_NORMAL = '"><{-+(.;:)\'}>'
+PAYLOAD_JSON = '"><{-+(.;:)\'}>'
 WORKER_COUNT = 3
 
 
@@ -83,27 +84,33 @@ class BurpExtender(IBurpExtender, ITab, IHttpListener, IMessageEditorController)
 
         self._domain_filter = JComboBox()
         self._domain_filter.addItem("All domains")
+        self._domain_filter.setPreferredSize(Dimension(100, 25))
         self._domain_filter.addActionListener(GenericFilterListener(self))
 
         self._reflected_filter = JComboBox()
         self._reflected_filter.addItem("All")
         self._reflected_filter.addItem("Yes")
         self._reflected_filter.addItem("No")
+        self._reflected_filter.setPreferredSize(Dimension(60, 25))
         self._reflected_filter.addActionListener(GenericFilterListener(self))
 
         self._status_filter = JComboBox()
         self._status_filter.addItem("All")
+        self._status_filter.setPreferredSize(Dimension(60, 25))
         self._status_filter.addActionListener(GenericFilterListener(self))
 
         self._type_filter = JComboBox()
         self._type_filter.addItem("All")
+        self._type_filter.setPreferredSize(Dimension(70, 25))
         self._type_filter.addActionListener(GenericFilterListener(self))
 
         self._context_filter = JComboBox()
         self._context_filter.addItem("All")
+        self._context_filter.setPreferredSize(Dimension(70, 25))
         self._context_filter.addActionListener(GenericFilterListener(self))
 
         self._search_field = JTextField(20)
+        self._search_field.setPreferredSize(Dimension(70, 25))
         self._search_field.addKeyListener(SearchKeyListener(self))
 
         self._show_only_reflected.addActionListener(GenericFilterListener(self))
@@ -170,7 +177,7 @@ class BurpExtender(IBurpExtender, ITab, IHttpListener, IMessageEditorController)
         self._panel.add(outer_split, BorderLayout.CENTER)
 
     def getTabCaption(self):
-        return "Reflection Detector"
+        return "Debug Reflection Detector"
 
     def getUiComponent(self):
         return self._panel
