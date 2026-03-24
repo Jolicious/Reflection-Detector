@@ -10,12 +10,14 @@ A Burp Suite extension for automated reflection detection and XSS triage.
 ---
 
 > [!IMPORTANT]
-> **This Filters potentials XSS targets/parameters, and is not 100% accurate.**
+> **This extension identifies potential XSS injection points (e.g., parameters and inputs), but results are heuristic-based and may include false positives or miss certain cases.
+>
+> It does not detect XSS vectors that rely on URI schemes such as `javascript:` or other non-standard execution contexts.**
 
 ---
 
 ### Payload Used 
-- ```"><meow>```
+- ```"><{-+(.;:)\'/}>'```
 
 So if you see this, know that this is from the extension!!
 
