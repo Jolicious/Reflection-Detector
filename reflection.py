@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from java.lang import Thread, Runnable
 from burp import IBurpExtender, ITab, IHttpListener, IMessageEditorController
 from java.lang import Thread, Runnable
 from java.util.concurrent import LinkedBlockingQueue
@@ -11,13 +12,14 @@ from javax.swing import (
 from javax.swing.table import DefaultTableModel
 from javax.swing.event import ListSelectionListener
 from java.awt import BorderLayout, FlowLayout, Dimension
+from threading import Lock
 import re
 import json
 
 
 PAYLOAD_NORMAL = '"><{-+(.;:)\'/}>'
 PAYLOAD_JSON = '"><{-+(.;:)\'/}>'
-WORKER_COUNT = 3
+WORKER_COUNT = 5
 
 
 class NonEditableTableModel(DefaultTableModel):
@@ -47,6 +49,7 @@ class BurpExtender(IBurpExtender, ITab, IHttpListener, IMessageEditorController)
         self._statuses = set(["All"])
         self._types = set(["All"])
         self._contexts = set(["All"])
+        self._combo_lock = Lock()
 
         self._build_ui()
 
@@ -275,12 +278,18 @@ class BurpExtender(IBurpExtender, ITab, IHttpListener, IMessageEditorController)
         return PAYLOAD_NORMAL
 
     def add_combo_value(self, combo, backing_set, value):
-        if value not in backing_set:
+        with self._combo_lock:
+            if value in backing_set:
+                return
             backing_set.add(value)
 
-            def run():
-                combo.addItem(value)
-            SwingUtilities.invokeLater(RunnableWrapper(run))
+        def run():
+            for i in range(combo.getItemCount()):
+                if str(combo.getItemAt(i)) == value:
+                    return
+            combo.addItem(value)
+
+        SwingUtilities.invokeLater(RunnableWrapper(run))
 
     def add_domain(self, host):
         self.add_combo_value(self._domain_filter, self._domains, host)
